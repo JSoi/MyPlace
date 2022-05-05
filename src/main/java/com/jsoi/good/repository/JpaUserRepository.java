@@ -2,6 +2,8 @@ package com.jsoi.good.repository;
 
 import com.jsoi.good.domain.UserVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,9 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class JpaMemberRepository implements MemberRepository {
+public class JpaUserRepository implements UserRepository {
     private final EntityManager em;
+
+    public JpaUserRepository(EntityManager em) {
+        this.em = em;
+    }
 
     public UserVO save(UserVO user) {
         em.persist(user);

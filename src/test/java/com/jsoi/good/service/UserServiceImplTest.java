@@ -1,7 +1,7 @@
 package com.jsoi.good.service;
 
 import com.jsoi.good.domain.UserVO;
-import com.jsoi.good.repository.JpaMemberRepository;
+import com.jsoi.good.repository.JpaUserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,21 +9,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
 @Transactional
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
     @Autowired
     private UserService userService;
+
     @Mock
-    private JpaMemberRepository memberRepository;
+    private JpaUserRepository userRepository;
 
     @BeforeEach
     public void beforeEach() {
-        userService = new UserServiceImpl(memberRepository);
+        userService = new UserServiceImpl(userRepository);
     }
 
     @Test

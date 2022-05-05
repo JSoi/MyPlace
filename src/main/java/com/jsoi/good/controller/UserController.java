@@ -1,20 +1,21 @@
 package com.jsoi.good.controller;
 
 import com.jsoi.good.domain.UserVO;
-import com.jsoi.good.service.UserServiceImpl;
+import com.jsoi.good.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
-    private final UserServiceImpl service;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
@@ -32,7 +33,7 @@ public class UserController {
 
     @PostMapping("login.do")
     public String loginProcess(UserVO vo, Model model) {
-        if (service.checkLogin(vo.getUserId(), vo.getPassword())) {
+        if (userService.checkLogin(vo.getUserId(), vo.getPassword())) {
             return "mypage"; // 로그인 성공
         }
         model.addAttribute("loginMessage", "아이디와 비밀번호를 확인해주세요");
@@ -46,7 +47,7 @@ public class UserController {
 
     @PostMapping("join.do")
     public String joinMember(UserVO vo, Model model) {
-        if (service.joinMember(vo)) { // 성공시
+        if (userService.joinMember(vo)) { // 성공시
             return "home";
         } else {
             model.addAttribute("userPWunChecked", vo.getPassword());
@@ -59,6 +60,7 @@ public class UserController {
     public String checkDuplicate(UserVO vo, Model model) {
         return "join";
     }
+
 
     @GetMapping("/test")
     public String test() {
