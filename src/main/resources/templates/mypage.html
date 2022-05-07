@@ -30,7 +30,10 @@
             <input id="placeLong" name="placeLong" type="hidden">
             <input id="searchPlace" name="searchPlace" type="button" value="검색">
             <div id="map" style="width:200px;height:200px;"></div>
-            <ul id="list"></ul>
+            <div id="list">
+                <ul></ul>
+            </div>
+
         </div>
         <input type="submit" value="등록">
     </form>
@@ -39,9 +42,13 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d551dc0472814004e2cdc3979990bac6&libraries=services,clusterer,drawing"></script>
 
 <script>
-    $(document).on("click","#list #lis",function(){
-        var min = $(this).find("a").val();
-        alert(min);
+    $(document).on("click","#lis",function(){
+        var min = $(this).text();
+        $('#placeName').val(min);
+        $('#placeLong').val($(this).next().attr('value'));
+        $('#placeLat').val($(this).next().next().attr('value'));
+        $('#placeName').attr("disabled",true); 
+        console.log( $('#placeLong').val());
     });
 
     var mapContainer = document.getElementById('map'),
@@ -71,7 +78,9 @@
             for (var i=0; i<data.length; i++) {
                 displayMarker(data[i]);
                 bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                $('ul').append("<li id='lis'>"+data[i].place_name+"<a id ='yval' value='"+data[i].y+"'><a id ='xval' value='"+data[i].x+"'></li>");
+                $('#list').append("<li><a id='lis'>"+data[i].place_name+
+                    "<a id ='yval' value='"+data[i].y+
+                    "'><a id ='xval' value='"+data[i].x+"'></li>");
             }
 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -108,6 +117,7 @@
              infowindow.close();
         });
     }
+
 
 
 
