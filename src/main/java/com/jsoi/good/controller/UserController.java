@@ -1,11 +1,15 @@
 package com.jsoi.good.controller;
 
+import com.jsoi.good.domain.PlaceVO;
 import com.jsoi.good.domain.UserVO;
 import com.jsoi.good.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,24 +49,13 @@ public class UserController {
         return "join";
     }
 
-    @PostMapping("join.do")
-    public String joinMember(UserVO vo, Model model) {
-        if (userService.joinMember(vo)) { // 성공시
-            return "home";
-        } else {
-            model.addAttribute("userPWunChecked", vo.getPassword());
-            model.addAttribute("joinMessage", "이미 존재하는 아이디입니다.");
-            return "join";
-        }
-    }
-
     @PostMapping("checkDuplicate")
     public String checkDuplicate(UserVO vo, Model model) {
         return "join";
     }
 
 
-    @GetMapping("/test")
+    @GetMapping("test")
     public String test() {
         return "join";
     }
@@ -71,4 +64,5 @@ public class UserController {
     public String getMap(Model model) {
         return "mypage";
     }
+
 }
